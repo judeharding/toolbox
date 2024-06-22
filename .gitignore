@@ -1,0 +1,30 @@
+.DS_Store
+package-lock.json
+
+# folders
+/node_modules
+/_*
+
+
+# local env files
+.env
+.env.local
+.env.*.local
+
+xxx-*
+xxx_*
+zzz-*
+zzz_*
+
+# Log files
+.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+

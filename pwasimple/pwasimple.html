@@ -13,6 +13,10 @@
 	</head>
 	<body style="padding: 1em" onload="welcomeSound()">
 		<h1>Welcome to My PWA</h1>
+
+		<button id="home">back to home</button>
+		<hr />
+
 		<p>This is a simple progressive web app example.</p>
 
 		<div>
@@ -64,6 +68,12 @@
 			const welcomeSound = document.getElementById("welcome-sound");
 			welcomeSound.play();
 			// alert("Page is loaded");
+		</script>
+
+		<script>
+			document.getElementById("home").addEventListener("click", () => {
+				window.location.href = "../index.html";
+			});
 		</script>
 	</body>
 </html>

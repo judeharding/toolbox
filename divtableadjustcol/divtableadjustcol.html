@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Responsive Flex Table with Adjustable Columns</title>
+		<style>
+			/* Basic table styling using flexbox */
+			.table {
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+			}
+
+			.header,
+			.row {
+				display: flex;
+				width: 100%;
+				border: 1px solid #ddd;
+			}
+
+			.cell {
+				padding: 8px;
+				text-align: left;
+				border: 1px solid #ddd;
+				position: relative;
+			}
+
+			/* Resizable column */
+			.resizable {
+				resize: horizontal;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+
+			/* Resizer handle */
+			.resizer {
+				width: 5px;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				right: 0;
+				cursor: col-resize;
+				background-color: #ccc;
+			}
+
+			/* For smaller screens (mobile) */
+			@media (max-width: 600px) {
+				.table {
+					display: block;
+				}
+
+				.row {
+					display: block;
+					border: 1px solid #ddd;
+					margin-bottom: 10px;
+					border-radius: 8px;
+					background-color: #f9f9f9;
+					box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+				}
+
+				.header {
+					display: none; /* Hide main table header on mobile */
+				}
+
+				.header-card {
+					display: block;
+					font-weight: bold;
+					background-color: #4caf50;
+					color: white;
+					padding: 10px;
+					text-align: center;
+					border-radius: 8px 8px 0 0;
+				}
+
+				.cell {
+					display: block;
+					border: none;
+					padding: 10px;
+					text-align: left;
+					border-bottom: 1px solid #eee;
+				}
+
+				.cell:last-child {
+					border-bottom: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<button id="home">back to home</button>
+		<hr />
+
+		<h2>Responsive Table with adjustable columns</h2>
+
+		<div class="table">
+			<!-- Table Header Row for Desktop View -->
+			<div class="header">
+				<div class="cell resizable">
+					Header 1
+					<div class="resizer"></div>
+				</div>
+				<div class="cell resizable">
+					Header 2 (Wider Column)
+					<div class="resizer"></div>
+				</div>
+				<div class="cell resizable">
+					Header 3
+					<div class="resizer"></div>
+				</div>
+			</div>
+
+			<!-- Row 1 -->
+			<div class="row">
+				<div class="cell">Row 1, Cell 1</div>
+				<div class="cell">Row 1, Cell 2</div>
+				<div class="cell">Row 1, Cell 3</div>
+			</div>
+
+			<!-- Row 2 -->
+			<div class="row">
+				<div class="cell">Row 2, Cell 1</div>
+				<div class="cell">Row 2, Cell 2</div>
+				<div class="cell">Row 2, Cell 3</div>
+			</div>
+
+			<!-- Row 3 -->
+			<div class="row">
+				<div class="cell">Row 3, Cell 1</div>
+				<div class="cell">Row 3, Cell 2</div>
+				<div class="cell">Row 3, Cell 3</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script>
+	document.getElementById("home").addEventListener("click", () => {
+		window.location.href = "../index.html";
+	});
+
+	const resizers = document.querySelectorAll(".resizer");
+	resizers.forEach(function (resizer) {
+		let startX, startWidth, resizableCell;
+
+		resizer.addEventListener("mousedown", function (e) {
+			resizableCell = resizer.parentElement;
+			startX = e.clientX;
+			startWidth = parseInt(document.defaultView.getComputedStyle(resizableCell).width, 10);
+			document.addEventListener("mousemove", resize);
+			document.addEventListener("mouseup", stopResize);
+		});
+
+		function resize(e) {
+			const newWidth = startWidth + (e.clientX - startX);
+			resizableCell.style.width = newWidth + "px";
+		}
+
+		function stopResize() {
+			document.removeEventListener("mousemove", resize);
+			document.removeEventListener("mouseup", stopResize);
+		}
+	});
+</script>

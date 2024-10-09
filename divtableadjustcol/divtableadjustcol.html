@@ -96,7 +96,7 @@
 		<div class="table">
 			<!-- Table Header Row for Desktop View -->
 			<div class="header">
-				<div class="cell resizable">
+				<div class="cell resizable" id="col1header">
 					Header 1
 					<div class="resizer"></div>
 				</div>
@@ -135,8 +135,11 @@
 </html>
 
 <script>
+	TRY TO GET STARTING COORDINATES OF COL1HEADER
+	console.log(document.querySelector("#col1header").startX);
+
 	document.getElementById("home").addEventListener("click", () => {
-		window.location.href = "../index.html";
+		window.location.href = "../index.html"; //go back home page
 	});
 
 	const resizers = document.querySelectorAll(".resizer");
@@ -159,6 +162,7 @@
 		function stopResize() {
 			document.removeEventListener("mousemove", resize);
 			document.removeEventListener("mouseup", stopResize);
+			console.log("stopResize", col1header);
 		}
 	});
 </script>

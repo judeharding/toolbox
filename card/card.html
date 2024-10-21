@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Login Card</title>
+		<link rel="stylesheet" href="styles.css" />
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: "Arial", sans-serif;
+				background-color: #f4f4f4;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				background-color: rgb(022 52 024 / 0.5);
+			}
+
+			.login-card {
+				background-color: white;
+				border-radius: 10px;
+				padding: 20px;
+				box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+				width: 300px;
+			}
+
+			h2 {
+				text-align: center;
+				margin-bottom: 20px;
+			}
+
+			.input-container {
+				margin-bottom: 15px;
+			}
+
+			label {
+				display: block;
+				font-weight: bold;
+				margin-bottom: 5px;
+			}
+
+			input {
+				width: 100%;
+				padding: 10px;
+				border: 1px solid #ddd;
+				border-radius: 5px;
+			}
+
+			button {
+				width: 100%;
+				padding: 10px;
+				background-color: #4caf50;
+				color: white;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 16px;
+			}
+
+			button:hover {
+				background-color: #45a049;
+			}
+
+			.signup-text {
+				text-align: center;
+				margin-top: 10px;
+			}
+
+			.signup-text a {
+				color: #4caf50;
+				text-decoration: none;
+				font-weight: bold;
+			}
+
+			.signup-text a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="login-card">
+			<h2>Login</h2>
+			<form action="#">
+				<div class="input-container">
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username" required />
+				</div>
+				<div class="input-container">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" required />
+				</div>
+				<button type="submit">Login</button>
+				<p class="signup-text">Don't have an account? <a href="#">Sign up</a></p>
+			</form>
+		</div>
+	</body>
+</html>

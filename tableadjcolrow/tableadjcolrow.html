@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Table w/ Adjustable Cols and Rows</title>
+
+		<!-- STYLES -->
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: Arial, sans-serif;
+			}
+
+			.table-container {
+				overflow: auto;
+				margin: 20px;
+			}
+
+			table {
+				border-collapse: collapse;
+				width: 100%;
+				table-layout: fixed;
+			}
+
+			th,
+			td {
+				padding: 8px;
+				border: 1px solid #ccc;
+				position: relative;
+			}
+
+			th {
+				background-color: #f4f4f4;
+			}
+
+			/* Indicate the cursor for resizing */
+			td,
+			th {
+				cursor: default;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<h1>HTML Table w/ Adjustable Cols and Rows</h1>
+		</div>
+		<button id="home">back to home</button>
+		<hr />
+
+		<div class="table-container">
+			<table id="resizableTable">
+				<thead>
+					<tr>
+						<th>Column 1</th>
+						<th>Column 2</th>
+						<th>Column 3</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Row 1, Cell 1</td>
+						<td>Row 1, Cell 2</td>
+						<td>Row 1, Cell 3</td>
+					</tr>
+					<tr>
+						<td>Row 2, Cell 1</td>
+						<td>Row 2, Cell 2</td>
+						<td>Row 2, Cell 3</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+<script>
+	document.getElementById("home").addEventListener("click", () => {
+		window.location.href = "../index.html";
+	});
+</script>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const table = document.getElementById("resizableTable");
+		let startX;
+		let startY;
+		let startWidth;
+		let startHeight;
+		let resizingColumn = false;
+		let resizingRow = false;
+		let currentCell;
+		let currentRow;
+
+		// Event listeners for detecting edge hover and mouse events
+		table.addEventListener("mousemove", (e) => {
+			const cell = e.target.closest("td, th");
+			if (!cell) return;
+
+			const isLastColumn = cell.cellIndex === cell.parentElement.cells.length - 1;
+
+			if (isNearEdge(e, cell, "right") && !isLastColumn) {
+				cell.style.cursor = "col-resize";
+			} else if (isNearEdge(e, cell, "bottom")) {
+				cell.style.cursor = "row-resize";
+			} else {
+				cell.style.cursor = "default";
+			}
+		});
+
+		table.addEventListener("mousedown", (e) => {
+			const cell = e.target.closest("td, th");
+			if (!cell) return;
+
+			const isLastColumn = cell.cellIndex === cell.parentElement.cells.length - 1;
+
+			if (isNearEdge(e, cell, "right") && !isLastColumn) {
+				startX = e.clientX;
+				currentCell = cell;
+				startWidth = cell.offsetWidth;
+				resizingColumn = true;
+				document.addEventListener("mousemove", resizeColumn);
+				document.addEventListener("mouseup", stopResize);
+			} else if (isNearEdge(e, cell, "bottom")) {
+				startY = e.clientY;
+				currentRow = cell.parentElement;
+				startHeight = currentRow.offsetHeight;
+				resizingRow = true;
+				document.addEventListener("mousemove", resizeRow);
+				document.addEventListener("mouseup", stopResize);
+			}
+		});
+
+		// Function to check if the cursor is near the right or bottom edge
+		function isNearEdge(e, element, edge) {
+			const rect = element.getBoundingClientRect();
+			if (edge === "right") {
+				return e.clientX > rect.right - 8 && e.clientX < rect.right;
+			}
+			if (edge === "bottom") {
+				return e.clientY > rect.bottom - 8 && e.clientY < rect.bottom;
+			}
+			return false;
+		}
+
+		function resizeColumn(e) {
+			if (resizingColumn) {
+				const dx = e.clientX - startX;
+				currentCell.style.width = `${startWidth + dx}px`;
+			}
+		}
+
+		function resizeRow(e) {
+			if (resizingRow) {
+				const dy = e.clientY - startY;
+				currentRow.style.height = `${startHeight + dy}px`;
+			}
+		}
+
+		function stopResize() {
+			resizingColumn = false;
+			resizingRow = false;
+			document.removeEventListener("mousemove", resizeColumn);
+			document.removeEventListener("mousemove", resizeRow);
+			document.removeEventListener("mouseup", stopResize);
+		}
+	});
+</script>

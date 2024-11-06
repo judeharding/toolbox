@@ -98,6 +98,15 @@
 				<button type="submit">Login</button>
 				<p class="signup-text">Don't have an account? <a href="#">Sign up</a></p>
 			</form>
+
+			<div>
+				<button id="home" style="margin-top: 50px">back to home</button>
+			</div>
 		</div>
 	</body>
 </html>
+<script>
+	document.getElementById("home").addEventListener("click", () => {
+		window.location.href = "../index.html";
+	});
+</script>

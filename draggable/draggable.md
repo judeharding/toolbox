@@ -1,9 +1,18 @@
+<!-- [Cards](./card/card.html) or  -->
+
+| <a href="../readme.md">Return to Documentation</a> <br> <br>Code Below | ![Alt text](.//draggable.png "Draggable Img") |
+| ---------------------------------------------------------------------- | --------------------------------------------- |
+
+<a href="./draggable.html" target="blank">VIEW DRAGGABLE</a>
+
+```
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<!-- needed for mobile first -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 
 		<!-- defer below will run AFTER html has been processed -->
 		<!-- <script src="./script.js" defer></script> -->
@@ -120,3 +129,5 @@
 		</script>
 	</body>
 </html>
+
+```

@@ -29,13 +29,15 @@ Simply extract the code you need to use and plug it into your own proect.
 
 ## Draggable Divs
 
-| Click me for code - <a href="./draggable/" target="blank">Draggable Divs</a> | ![Alt text](./draggable/draggable.png "Draggables Img") |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------- |
+| Click me for code - <a href="./draggable/draggable.md" target="blank">Draggable Divs</a> | ![Alt text](./draggable/draggable.png "Draggables Img") |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------- |
 
 ## Simple PWA
 
-<a href="./pwasimple/" target="blank">Simple Progressive Web App</a>
+| Click me for code - <a href="./pwasimple/" target="blank">PWA</a> | ![Alt text](./pwasimple/pwa.png "PWA Img") |
+| ----------------------------------------------------------------- | ------------------------------------------ |
 
 ## Table Element w/ Adjustable Cols and Rows
 
-<a href="./tableadjcolrow/" target="blank">Table Element w/ Adjustable Columns and Rows</a>
+| Click me for code - <a href="./tableadjcolrow/tableadjcolrow.html" target="blank">Table w/ Adjustable Col-Row</a> | ![Alt text](./tableadjcolrow/tableadjcolrow.png "Table w/ Adj Col-Row Img") |
+| ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |

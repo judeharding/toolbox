@@ -1,3 +1,11 @@
+<!-- [Cards](./card/card.html) or  -->
+
+| <a href="../readme.md">Return to Documentation</a> <br> <br>Code Below | ![Alt text](./divtableadjustcol.png "DivTableAdjustCol Img") |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------ |
+
+<a href="./divtableadjustcol.html" target="blank">VIEW DIV TABLE W/ ADJUSTABLE COLS</a>
+
+```
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -194,9 +202,4 @@
 	});
 </script>
 
-<!-- =====
-		<h2>Responsive Table with adjustable columns</h2>
-<button id="home">back to home</button>
-<hr />
-
-document.getElementById("home").addEventListener("click", () => { window.location.href = "../index.html"; //go back home page }); -->
+```

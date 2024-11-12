@@ -1,8 +1,16 @@
+<!-- [Cards](./card/card.html) or  -->
+
+| <a href="../readme.md">Return to Documentation</a> <br> <br>Code Below | ![Alt text](./card.png "Card Img") |
+| ---------------------------------------------------------------------- | ---------------------------------- |
+
+<a href="./card.html" target="blank">VIEW CARD</a>
+
+```
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<!-- needed for mobile first -->
+         <!-- needed for mobile first -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 		<title>Login Card</title>
@@ -126,3 +134,5 @@
 		window.location.href = "../index.html";
 	});
 </script>
+
+```

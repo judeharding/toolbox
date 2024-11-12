@@ -1,3 +1,11 @@
+<!-- [Cards](./card/card.html) or  -->
+
+| <a href="../readme.md">Return to Documentation</a> <br> <br>Code Below | ![Alt text](./divtable.png "DivTable Img") |
+| ---------------------------------------------------------------------- | ------------------------------------------ |
+
+<a href="./divtable.html" target="blank">VIEW DIV TABLE</a>
+
+```
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -166,3 +174,5 @@
 		window.location.href = "../index.html";
 	});
 </script>
+
+```

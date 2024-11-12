@@ -14,28 +14,28 @@ Simply extract the code you need to use and plug it into your own proect.
 
 <!-- [Cards](./card/card.html) or  -->
 
-| Click me for code - <a href="./card/card.html" target="blank">Card</a> | ![Alt text](./card/card.png "Card Img") |
-| ---------------------------------------------------------------------- | --------------------------------------- |
+| Click me for code - <a href="./card/card.md" target="blank">Card</a> | ![Alt text](./card/card.png "Card Img") |
+| -------------------------------------------------------------------- | --------------------------------------- |
 
 ## Div Table
 
-| Click me for code - <a href="./divtable/divtable.html" target="blank">Div Table</a> | ![Alt text](./divtable/divtable.png "Div Table Img") |
-| ----------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Click me for code - <a href="./divtable/divtable.md" target="blank">Div Table</a> | ![Alt text](./divtable/divtable.png "Div Table Img") |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------- |
 
 ## Div Table w/ Adjustable Cols
 
-| Click me for code - <a href="./divtableadjustcol/divtableadjustcol.html" target="blank">Div Table w/ Adj. Columns</a> | ![Alt text](./divtableadjustcol/divtablewadjcol.png "Div Table Adjustable Cols Img") |
-| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Click me for code - <a href="./divtableadjustcol/divtableadjustcol.md" target="blank">Div Table w/ Adj. Columns</a> | ![Alt text](./divtableadjustcol/divtableadjustcol.png "Div Table Adjustable Cols Img") |
+| ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 
 ## Draggable Divs
 
-| Click me for code - <a href="./draggable/draggable.html" target="blank">Draggable Divs</a> | ![Alt text](./draggable/draggable.png "Draggables Img") |
-| ------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
+| Click me for code - <a href="./draggable/" target="blank">Draggable Divs</a> | ![Alt text](./draggable/draggable.png "Draggables Img") |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------- |
 
 ## Simple PWA
 
-<a href="./pwasimple/pwasimple.html" target="blank">Simple Progressive Web App</a>
+<a href="./pwasimple/" target="blank">Simple Progressive Web App</a>
 
 ## Table Element w/ Adjustable Cols and Rows
 
-<a href="./tableadjcolrow/tableadjcolrow.html" target="blank">Table Element w/ Adjustable Columns and Rows</a>
+<a href="./tableadjcolrow/" target="blank">Table Element w/ Adjustable Columns and Rows</a>

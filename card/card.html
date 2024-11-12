@@ -4,8 +4,10 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Login Card</title>
-		<link rel="stylesheet" href="styles.css" />
+
+		<!-- STYLES -->
 		<style>
+			/* REMOVES DEFAULT BROWSER MARGINS AND PADDINGS */
 			* {
 				margin: 0;
 				padding: 0;
@@ -81,26 +83,38 @@
 			.signup-text a:hover {
 				text-decoration: underline;
 			}
+
+			.nav {
+				margin-bottom: 50px;
+			}
 		</style>
 	</head>
 	<body>
-		<div class="login-card">
-			<h2>Login</h2>
-			<form action="#">
-				<div class="input-container">
-					<label for="username">Username</label>
-					<input type="text" id="username" name="username" required />
-				</div>
-				<div class="input-container">
-					<label for="password">Password</label>
-					<input type="password" id="password" name="password" required />
-				</div>
-				<button type="submit">Login</button>
-				<p class="signup-text">Don't have an account? <a href="#">Sign up</a></p>
-			</form>
+		<!--  this stack div is to add a button back to home -->
+		<div class="stack">
+			<div class="nav">
+				<button id="home">back to home</button>
+			</div>
 
-			<div>
-				<button id="home" style="margin-top: 50px">back to home</button>
+			<!-- This div below is used with the css style above to create a basic login card - you will need your own JS to make it work-->
+			<div class="login-card">
+				<h2>Login</h2>
+				<form action="#">
+					<div class="input-container">
+						<label for="username">Username</label>
+						<input type="text" id="username" name="username" required />
+					</div>
+					<div class="input-container">
+						<label for="password">Password</label>
+						<input type="password" id="password" name="password" required />
+					</div>
+					<button type="submit">Login</button>
+					<p class="signup-text">Don't have an account? <a href="#">Sign up</a></p>
+				</form>
+
+				<!-- <div>
+					<button id="home" style="margin-top: 50px">back to home</button>
+				</div> -->
 			</div>
 		</div>
 	</body>

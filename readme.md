@@ -1,6 +1,6 @@
 # Toolbox Documentation
 
-Here is a list of some of the most common tools used in GLDA development.
+Here is a list of some of the most common tools used in GLDA development.  https://www.notion.so/gdla/Technical-Documentation-18b9a21e9787456e8ec9691650f6df46
 
 ## Quick Start
 

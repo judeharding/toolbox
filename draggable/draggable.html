@@ -14,7 +14,7 @@
 		<style>
 			body {
 				background-color: pink;
-				margin: 0;
+				margin: 5px;
 			}
 
 			.container {
@@ -26,7 +26,7 @@
 			.draggable {
 				padding: 1rem;
 				background-color: lightblue;
-				border: 10px solid black;
+				border: 5px solid yellow;
 				cursor: move;
 			}
 
@@ -36,15 +36,18 @@
 			}
 		</style>
 	</head>
+
 	<body>
 		<h1>Testing Draggables</h1>
 
 		<button id="home">back to home</button>
 		<hr />
 
-		<div class="container">
-			<div class="draggable" draggable="true">1</div>
-			<div class="draggable" draggable="true">2</div>
+		<div>
+			<div class="container">
+				<div class="draggable" draggable="true">1</div>
+				<div class="draggable" draggable="true">2</div>
+			</div>
 		</div>
 
 		<div class="container">
@@ -55,6 +58,19 @@
 		<div class="container">
 			<div class="draggable" draggable="true">5</div>
 			<div class="draggable" draggable="true">6</div>
+		</div>
+
+		<div class="container">
+			<div class="draggable" draggable="true">7</div>
+			<div class="draggable" draggable="true">8</div>
+			<div class="draggable" draggable="true">9</div>
+			<div class="draggable" draggable="true">10</div>
+			<div class="draggable" draggable="true">11</div>
+			<div class="draggable" draggable="true">12</div>
+			<div class="draggable" draggable="true">13</div>
+			<div class="draggable" draggable="true">14</div>
+			<div class="draggable" draggable="true">15</div>
+			<div class="draggable" draggable="true">16</div>
 		</div>
 
 		<script>
@@ -71,6 +87,9 @@
 			const draggables = document.querySelectorAll(".draggable");
 
 			const containers = document.querySelectorAll(".container");
+
+			console.log("DRAGGABLES", draggables);
+			console.log("CONTAINERS", containers);
 
 			draggables.forEach((draggable) => {
 				draggable.addEventListener("dragstart", () => {

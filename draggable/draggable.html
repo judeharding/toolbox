@@ -43,8 +43,8 @@
 		<hr />
 
 		<div class="container">
-			<p class="draggable" draggable="true">1</p>
-			<p class="draggable" draggable="true">2</p>
+			<div class="draggable" draggable="true">1</div>
+			<div class="draggable" draggable="true">2</div>
 		</div>
 
 		<div class="container">
@@ -52,14 +52,21 @@
 			<div class="draggable" draggable="true">4</div>
 		</div>
 
+		<div class="container">
+			<div class="draggable" draggable="true">5</div>
+			<div class="draggable" draggable="true">6</div>
+		</div>
+
 		<script>
+			//HOME BUTTON SCRIPT
 			document.getElementById("home").addEventListener("click", () => {
 				window.location.href = "../index.html";
 			});
 		</script>
+
 		<script>
 			// https://www.youtube.com/watch?v=jfYWwQrtzzY
-			console.log("hello from script.js");
+			console.log("hello from draggable.html script");
 
 			const draggables = document.querySelectorAll(".draggable");
 
@@ -98,13 +105,15 @@
 
 			// drag and drop between containers
 			function getDragAfterElement(container, y) {
+				console.log("DRAGGING container", container);
+
 				// get a list of all draggable elements but NOT the one being dragged in the current container
 				const draggablElements = [...container.querySelectorAll(".draggable:not(.dragging)")];
 
 				return draggablElements.reduce(
 					(closest, child) => {
 						const box = child.getBoundingClientRect();
-						console.log("box", box);
+						console.log("THIS box", box);
 						const offset = y - box.top - box.height / 2;
 						console.log(offset);
 

@@ -44,15 +44,15 @@
 		<hr />
 
 		<div>
-			<div class="container">
-				<div class="draggable" draggable="true">1</div>
-				<div class="draggable" draggable="true">2</div>
+			<div class="container" id="container1">
+				<div class="draggable" draggable="true" id="container1div1" data-stuff="box1">Box 1</div>
+				<div class="draggable" draggable="true" id="container1div2" data-stuff="box2">Box 2</div>
 			</div>
 		</div>
 
-		<div class="container">
-			<div class="draggable" draggable="true">3</div>
-			<div class="draggable" draggable="true">4</div>
+		<div class="container" id="container2">
+			<div class="draggable" draggable="true" id="container2div1" data-stuff="box3">Box 3</div>
+			<div class="draggable" draggable="true" id="container2div2" data-stuff="box4">Box 4</div>
 		</div>
 
 		<div class="container">
@@ -85,27 +85,35 @@
 			console.log("hello from draggable.html script");
 
 			const draggables = document.querySelectorAll(".draggable");
-
 			const containers = document.querySelectorAll(".container");
 
-			console.log("DRAGGABLES", draggables);
-			console.log("CONTAINERS", containers);
-
 			draggables.forEach((draggable) => {
+				// var originalContainer = draggable.parentElement.id;
+				// var originalDataStuff = draggable.getAttribute("data-stuff");
+
 				draggable.addEventListener("dragstart", () => {
 					console.log("drag started");
 					draggable.classList.add("dragging");
+					// const stuff = draggable.getAttribute("data-stuff");
+					var originalContainer = draggable.parentElement.id;
+					var originalDataStuff = draggable.getAttribute("data-stuff");
+
+					console.log("DATA-STUFF ID IS ... ", originalDataStuff, "FROM originalContainer...", originalContainer);
 				});
 
 				draggable.addEventListener("dragend", () => {
 					console.log("drag ended");
+					var newContainer = draggable.parentElement.id;
+					var newDataStuff = draggable.getAttribute("data-stuff");
+
+					console.log("NEW DATA-STUFF ID IS ... ", newDataStuff, "NEW newContainer...", newContainer);
 					draggable.classList.remove("dragging");
 				});
 			});
 
 			containers.forEach((container) => {
 				container.addEventListener("dragover", (e) => {
-					console.log("drag over");
+					// console.log("drag over");
 
 					e.preventDefault(); // changes cursor to show you can drop
 
@@ -124,7 +132,8 @@
 
 			// drag and drop between containers
 			function getDragAfterElement(container, y) {
-				console.log("DRAGGING container", container);
+				console.log("DRAGGING container ID... ", container.id);
+				console.log("DRAGGING div ID... ", document.querySelector(".dragging").id);
 
 				// get a list of all draggable elements but NOT the one being dragged in the current container
 				const draggablElements = [...container.querySelectorAll(".draggable:not(.dragging)")];
@@ -132,9 +141,9 @@
 				return draggablElements.reduce(
 					(closest, child) => {
 						const box = child.getBoundingClientRect();
-						console.log("THIS box", box);
+						// console.log("THIS box is...", box);
 						const offset = y - box.top - box.height / 2;
-						console.log(offset);
+						// console.log(offset);
 
 						if (offset < 0 && offset > closest.offset) {
 							return { offset: offset, element: child };

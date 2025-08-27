@@ -2,13 +2,12 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>TESTING DRAGGABLES</title>
-
+		<title>Drag & Drop DTO Example</title>
 		<style>
 			.wrapper {
 				display: flex;
 				gap: 40px;
+				margin-top: 20px;
 			}
 			.container {
 				display: flex;
@@ -63,24 +62,41 @@
 		</div>
 
 		<script>
-			const containers = document.querySelectorAll(".container");
+			var containers = document.querySelectorAll(".container");
 
-			containers.forEach((container) => {
-				container.addEventListener("dragstart", (e) => {
-					e.target.classList.add("dragging");
+			// Loop through each container
+			for (let i = 0; i < containers.length; i++) {
+				let container = containers[i];
 
-					// Store original position + container in sessionStorage
-					const position = e.target.dataset.position || "unknown";
-					const containerId = e.target.parentElement.id;
-					sessionStorage.setItem("draggedId", e.target.dataset.id);
-					sessionStorage.setItem("originalPosition", position);
-					sessionStorage.setItem("originalContainer", containerId);
+				// Drag start
+				container.addEventListener("dragstart", function (e) {
+					var dragging = e.target;
+					dragging.classList.add("dragging");
+
+					// Find original position
+					var parentItems = dragging.parentElement.querySelectorAll(".item");
+					var originalPosition = 0;
+					for (var j = 0; j < parentItems.length; j++) {
+						if (parentItems[j] === dragging) {
+							originalPosition = j + 1;
+							break;
+						}
+					}
+
+					// Store info in DataTransfer
+					var dragInfo = {
+						id: dragging.dataset.id,
+						originalContainer: dragging.parentElement.id,
+						originalPosition: originalPosition,
+					};
+					e.dataTransfer.setData("application/json", JSON.stringify(dragInfo));
 				});
 
-				container.addEventListener("dragover", (e) => {
-					e.preventDefault(); // required to allow dropping
-					const dragging = document.querySelector(".dragging");
-					const afterElement = getDragAfterElement(container, e.clientY);
+				// Drag over (needed to allow drop)
+				container.addEventListener("dragover", function (e) {
+					e.preventDefault();
+					var dragging = document.querySelector(".dragging");
+					var afterElement = getDragAfterElement(container, e.clientY);
 					if (afterElement == null) {
 						container.appendChild(dragging);
 					} else {
@@ -88,64 +104,181 @@
 					}
 				});
 
-				container.addEventListener("drop", (e) => {
+				// Drop
+				container.addEventListener("drop", function (e) {
 					e.preventDefault();
-					const dragging = document.querySelector(".dragging");
-					if (dragging) {
-						dragging.classList.remove("dragging");
-					}
-					updateAll();
+					var dragging = document.querySelector(".dragging");
+					if (!dragging) return;
+					dragging.classList.remove("dragging");
 
-					// Compare original vs new
-					if (dragging) {
-						const newPosition = dragging.dataset.position;
-						const newContainer = dragging.parentElement.id;
-						// console.log(`Record Id ${dragging.dataset.id} : old index ${sessionStorage.getItem("originalPosition")} in ${sessionStorage.getItem("originalContainer")} to new index ${newPosition} in${newContainer}`);
-						// console.dir("DATASET: " + `${dragging.dataset}`);
-						console.log("LOOKING INSIDE THE DATASET:", JSON.stringify(dragging.dataset));
-						console.log("Record Id: " + `${dragging.dataset.id}`);
-						console.log("Old Continer: " + `${sessionStorage.getItem("originalContainer")}`);
-						console.log("Old Index: " + ` ${sessionStorage.getItem("originalPosition")}`);
-						console.log("New Container: " + `${newContainer}`);
-						console.log("New Index: " + `${newPosition}`);
-					}
-				});
-			});
+					// Retrieve original info
+					var dragInfo = JSON.parse(e.dataTransfer.getData("application/json"));
 
-			function getDragAfterElement(container, y) {
-				const draggableElements = [...container.querySelectorAll(".item:not(.dragging)")];
-				return draggableElements.reduce(
-					(closest, child) => {
-						const box = child.getBoundingClientRect();
-						const offset = y - box.top - box.height / 2;
-						if (offset < 0 && offset > closest.offset) {
-							return { offset: offset, element: child };
-						} else {
-							return closest;
+					// Compute new position
+					var newItems = dragging.parentElement.querySelectorAll(".item");
+					var newPosition = 0;
+					for (var j = 0; j < newItems.length; j++) {
+						if (newItems[j] === dragging) {
+							newPosition = j + 1;
+							break;
 						}
-					},
-					{ offset: Number.NEGATIVE_INFINITY }
-				).element;
-			}
+					}
 
-			function renumberItems(container, counterId) {
-				const items = container.querySelectorAll(".item");
-				items.forEach((item, index) => {
-					const position = index + 1;
-					item.dataset.position = position; // update data-position
-					item.textContent = `Item ${position} (id=${item.dataset.id})`;
+					// Log the DTO
+
+					console.log("id: ", dragInfo.id);
+					console.log("originalContainer: ", dragInfo.originalContainer);
+					console.log("originalIndex: ", dragInfo.originalPosition);
+					console.log("newContainer: ", dragging.parentElement.id);
+					console.log("newIndex: ", newPosition);
+
+					// Update numbering and counters
+					updateAll();
 				});
-				document.getElementById(counterId).textContent = `Total items: ${items.length}`;
 			}
 
+			// Helper: find element after cursor
+			function getDragAfterElement(container, y) {
+				var draggableElements = container.querySelectorAll(".item:not(.dragging)");
+				var closest = { offset: Number.NEGATIVE_INFINITY, element: null };
+				for (var i = 0; i < draggableElements.length; i++) {
+					var child = draggableElements[i];
+					var box = child.getBoundingClientRect();
+					var offset = y - box.top - box.height / 2;
+					if (offset < 0 && offset > closest.offset) {
+						closest = { offset: offset, element: child };
+					}
+				}
+				return closest.element;
+			}
+
+			// Update numbering and counters
 			function updateAll() {
-				renumberItems(document.getElementById("container1"), "counter1");
-				renumberItems(document.getElementById("container2"), "counter2");
-				renumberItems(document.getElementById("container3"), "counter3");
+				for (var i = 0; i < containers.length; i++) {
+					var container = containers[i];
+					var items = container.querySelectorAll(".item");
+					for (var j = 0; j < items.length; j++) {
+						items[j].dataset.position = j + 1;
+						items[j].textContent = "Item " + (j + 1) + " (id=" + items[j].dataset.id + ")";
+					}
+					var counterId = container.id.replace("container", "counter");
+					var counter = document.getElementById(counterId);
+					if (counter) {
+						counter.textContent = "Total items: " + items.length;
+					}
+				}
 			}
 
-			// Initialize on page load
+			// Initialize on load
 			updateAll();
+
+			// const containers = document.querySelectorAll(".container");
+
+			// containers.forEach((container) => {
+			// 	container.addEventListener("dragstart", (e) => {
+			// 		const dragging = e.target;
+			// 		dragging.classList.add("dragging");
+
+			// 		// Store original container and position in DataTransfer
+			// 		const parentItems = [...dragging.parentElement.querySelectorAll(".item")];
+			// 		const dragInfo = {
+			// 			id: dragging.dataset.id,
+			// 			originalContainer: dragging.parentElement.id,
+			// 			originalPosition: parentItems.indexOf(dragging) + 1,
+			// 		};
+			// 		e.dataTransfer.setData("application/json", JSON.stringify(dragInfo));
+			// 	});
+
+			// 	container.addEventListener("dragover", (e) => {
+			// 		e.preventDefault();
+			// 		const dragging = document.querySelector(".dragging");
+			// 		const afterElement = getDragAfterElement(container, e.clientY);
+			// 		if (afterElement == null) {
+			// 			container.appendChild(dragging);
+			// 		} else {
+			// 			container.insertBefore(dragging, afterElement);
+			// 		}
+			// 	});
+
+			// 	container.addEventListener("drop", (e) => {
+			// 		e.preventDefault();
+			// 		const dragging = document.querySelector(".dragging");
+			// 		if (!dragging) return;
+			// 		dragging.classList.remove("dragging");
+
+			// 		// Retrieve original info from DataTransfer
+			// 		const dragInfo = JSON.parse(e.dataTransfer.getData("application/json"));
+
+			// 		// Compute new position
+			// 		const newItems = [...dragging.parentElement.querySelectorAll(".item")];
+			// 		const newPosition = newItems.indexOf(dragging) + 1;
+
+			// 		// Log DTO: original + new info
+			// 		console.log({
+			// 			id: dragInfo.id,
+			// 			originalContainer: dragInfo.originalContainer,
+			// 			originalPosition: dragInfo.originalPosition,
+			// 			newContainer: dragging.parentElement.id,
+			// 			newPosition: newPosition,
+			// 		});
+
+			// 		// Update numbering and counters
+			// 		updateAll();
+			// 	});
+			// });
+
+			// // Helper to find element after cursor
+			// function getDragAfterElement(container, y) {
+			// 	const draggableElements = [...container.querySelectorAll(".item:not(.dragging)")];
+			// 	return draggableElements.reduce(
+			// 		(closest, child) => {
+			// 			const box = child.getBoundingClientRect();
+			// 			const offset = y - box.top - box.height / 2;
+			// 			if (offset < 0 && offset > closest.offset) {
+			// 				return { offset: offset, element: child };
+			// 			} else {
+			// 				return closest;
+			// 			}
+			// 		},
+			// 		{ offset: Number.NEGATIVE_INFINITY }
+			// 	).element;
+			// }
+
+			// // Update numbering and counters
+			// function updateAll() {
+			// 	containers.forEach((container) => {
+			// 		const items = container.querySelectorAll(".item");
+			// 		items.forEach((item, index) => {
+			// 			item.dataset.position = index + 1;
+			// 			item.textContent = `Item ${index + 1} (id=${item.dataset.id})`;
+			// 		});
+			// 		const counter = document.getElementById(container.id.replace("container", "counter"));
+			// 		counter.textContent = `Total items: ${items.length}`;
+			// 	});
+			// }
+
+			// // Initialize on load
+			// updateAll();
 		</script>
 	</body>
 </html>
+
+<!-- 
+
+					// -----
+					// Build DTO THIS WORKS in the scripting section
+					// const dto = {
+					// 	id: dragData.id,
+					// 	originalContainer: dragData.originalContainer,
+					// 	originalPosition: dragData.originalPosition,
+					// 	newContainer: dragging.parentElement.id,
+					// 	newPosition: newPosition,
+					// };
+
+					// console.log("Drag DTO:", dto);
+					// console.log("Record Id:", dto.id);
+					// console.log("Original Container:", dto.originalContainer);
+					// console.log("Original Index:", dto.originalPosition);
+					// console.log("New Container:", dto.newContainer);
+					// console.log("New Index:", dto.newPosition);
+					// ----- -->

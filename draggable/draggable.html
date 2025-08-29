@@ -15,7 +15,6 @@
 				display: flex;
 				flex-direction: column;
 				gap: 8px;
-				/* width: 100%; */
 				min-height: 150px;
 				padding: 10px;
 				border: 2px dashed #bbb;
@@ -35,44 +34,43 @@
 			.draggingover {
 				background: pink;
 			}
-			/* .counter {
-				margin-top: 10px;
-				font-weight: bold;
-				color: #555;
-			} */
 		</style>
 	</head>
 	<body>
 		<div class="wrapper">
 			<div>
 				<div class="container" id="container1">
-					<div id="mike" class="item" draggable="true">mike</div>
-					<div id="jude" class="item" draggable="true">jude</div>
-					<div id="scott" class="item" draggable="true">scott</div>
+					<div id="mike" class="item" draggable="true" data-container-id="container1">mike</div>
+					<div id="jude" class="item" draggable="true" data-container-id="container1">jude</div>
+					<div id="scott" class="item" draggable="true" data-container-id="container1">scott</div>
 				</div>
-				<!-- <div class="counter" id="counter1"></div> -->
 			</div>
 
 			<div>
 				<div class="container" id="container2">
-					<div id="ken" class="item" draggable="true">ken</div>
-					<div id="marie" class="item" draggable="true">marie</div>
+					<div id="ken" class="item" draggable="true" data-container-id="container2">ken</div>
+					<div id="marie" class="item" draggable="true" data-container-id="container2">marie</div>
 				</div>
-				<!-- <div class="counter" id="counter2"></div> -->
 			</div>
 
 			<div>
 				<div class="container" id="container3"></div>
-				<!-- <div class="counter" id="counter3"></div> -->
 			</div>
 		</div>
 
 		<script>
-			var draggedElement = null;
+			let draggedElement = null;
+			let draggedElementId = null;
+			let topBottomHalf = null;
+			let targetId = null;
+			let oldContainerId = null;
+			let newContainerId = null;
 
 			// STARTING THE DRAG
 			document.addEventListener("dragstart", function (event) {
 				draggedElement = event.target;
+				draggedElementId = event.target.id;
+				oldContainerId = event.target.getAttribute("data-container-id");
 				console.log("STARTING THE DRAG...", event.target);
 				draggedElement.classList.add("dragging");
 			});
@@ -88,157 +86,42 @@
 			document.addEventListener("dragover", function (event) {
 				event.preventDefault();
 				console.log("DRAGGING OVER...", event.target.id);
+
+				const rect = event.target.getBoundingClientRect();
+				const offset = event.clientY - rect.top;
+
+				if (offset < rect.height / 2) {
+					topBottomHalf = "top";
+				} else {
+					topBottomHalf = "bottom";
+				}
 			});
 
-			// DRAGGING LEAVING A VALID DROP TARGET
+			// DRAG LEAVING A VALID DROP TARGET
 			document.addEventListener("dragleave", function (event) {
 				if (event.target.classList.contains("item")) {
 					event.target.classList.remove("draggingover");
 				}
 			});
 
-			// DROPPING THE DRAGGED ELEMENT
+			//DRAG DROP - Where You Dropped The Element
+			document.addEventListener("drop", function (event) {
+				event.preventDefault();
+
+				targetId = event.target.id;
+				newContainerId = event.target.getAttribute("data-container-id");
+				console.log("xxxxxxxxxxxxx", draggedElementId, topBottomHalf, targetId, oldContainerId, newContainerId);
+
+				event.target.classList.remove("draggingover");
+			});
+
+			// ENDED THE DRAGGED ELEMENT - like hitting the esc or dragging over a non valid drop target WHILE dragging
 			document.addEventListener("dragend", function (event) {
-				console.log("ENDING THE DRAG...", event.target);
+				console.log("ENDING THE DRAG...", draggedElement);
 				draggedElement.classList.remove("dragging");
+				console.log("");
 				draggedElement = null;
 			});
 		</script>
-
-		<script>
-			// var containers = document.querySelectorAll(".container");
-
-			// // Loop through each container
-			// for (let i = 0; i < containers.length; i++) {
-			// 	let container = containers[i];
-
-			// 	// Drag start
-			// 	container.addEventListener("dragstart", function (e) {
-			// 		var dragging = e.target;
-			// 		dragging.classList.add("dragging");
-			// 		console.log("STARTING THE DRAG...", dragging);
-
-			// 		// Find original position
-			// 		var parentItems = dragging.parentElement.querySelectorAll(".item");
-			// 		var originalPosition = 0;
-			// 		for (var j = 0; j < parentItems.length; j++) {
-			// 			if (parentItems[j] === dragging) {
-			// 				originalPosition = j + 1;
-			// 				break;
-			// 			}
-			// 		}
-
-			// 		// Store info in DataTransfer
-			// 		var dragInfo = {
-			// 			id: dragging.id,
-			// 			originalContainer: dragging.parentElement.id,
-			// 			originalPosition: originalPosition,
-			// 		};
-			// 		e.dataTransfer.setData("application/json", JSON.stringify(dragInfo));
-			// 	});
-
-			// 	// Drag over (needed to allow drop)
-			// 	container.addEventListener("dragover", function (e) {
-			// 		e.preventDefault();
-			// 		// console.log("THE ID OF WHO I AM OVER AT THE MOMENT>...", e.target.id);
-			// 		var dragging = document.querySelector(".dragging");
-			// 		var afterElement = getDragAfterElement(container, e.clientY);
-			// 		if (afterElement == null) {
-			// 			container.appendChild(dragging);
-			// 		} else {
-			// 			container.insertBefore(dragging, afterElement);
-			// 		}
-			// 	});
-
-			// 	// Drop
-			// 	container.addEventListener("drop", function (e) {
-			// 		e.preventDefault();
-			// 		var dragging = document.querySelector(".dragging");
-			// 		if (!dragging) return;
-			// 		dragging.classList.remove("dragging");
-
-			// 		// Retrieve original info
-			// 		var dragInfo = JSON.parse(e.dataTransfer.getData("application/json"));
-
-			// 		// Compute new position
-			// 		var newItems = dragging.parentElement.querySelectorAll(".item");
-			// 		var newPosition = 0;
-			// 		for (var j = 0; j < newItems.length; j++) {
-			// 			if (newItems[j] === dragging) {
-			// 				newPosition = j + 1;
-			// 				break;
-			// 			}
-			// 		}
-
-			// 		// Log the DTO - data transfer object
-
-			// 		console.log("id: ", dragInfo.id);
-			// 		console.log("originalContainer: ", dragInfo.originalContainer);
-			// 		console.log("originalIndex: ", dragInfo.originalPosition);
-			// 		console.log("newContainer: ", dragging.parentElement.id);
-			// 		console.log("newIndex: ", newPosition);
-
-			// 		// Update numbering and counters
-			// 		// updateAll();
-			// 	});
-			// }
-
-			// // Helper: find element after cursor. MOVES DIVS IN THE CONTAINER OUT OF THE WAY
-			// function getDragAfterElement(container, y) {
-			// 	var draggableElements = container.querySelectorAll(".item:not(.dragging)");
-			// 	var closest = { offset: Number.NEGATIVE_INFINITY, element: null };
-			// 	for (var i = 0; i < draggableElements.length; i++) {
-			// 		var child = draggableElements[i];
-			// 		var box = child.getBoundingClientRect();
-			// 		var offset = y - box.top - box.height / 2;
-
-			// 		// console.log(offset);
-			// 		if (offset < 0 && offset > closest.offset) {
-			// 			closest = { offset: offset, element: child };
-			// 		}
-			// 	}
-			// 	return closest.element;
-			// }
-
-			// Update numbering and counters
-			// function updateAll() {
-			// 	for (var i = 0; i < containers.length; i++) {
-			// 		var container = containers[i];
-			// 		var items = container.querySelectorAll(".item");
-			// 		for (var j = 0; j < items.length; j++) {
-			// 			items[j].dataset.position = j + 1;
-			// 			items[j].textContent = "Item " + (j + 1) + " (id=" + items[j].id + ")";
-			// 		}
-			// 		var counterId = container.id.replace("container", "counter");
-			// 		var counter = document.getElementById(counterId);
-			// 		if (counter) {
-			// 			counter.textContent = "Total items: " + items.length;
-			// 		}
-			// 	}
-			// }
-
-			// Initialize on load
-			// updateAll();
-		</script>
 	</body>
 </html>
-
-<!-- 
-
-					// -----
-					// Build DTO THIS WORKS in the scripting section
-					// const dto = {
-					// 	id: dragData.id,
-					// 	originalContainer: dragData.originalContainer,
-					// 	originalPosition: dragData.originalPosition,
-					// 	newContainer: dragging.parentElement.id,
-					// 	newPosition: newPosition,
-					// };
-
-					// console.log("Drag DTO:", dto);
-					// console.log("Record Id:", dto.id);
-					// console.log("Original Container:", dto.originalContainer);
-					// console.log("Original Index:", dto.originalPosition);
-					// console.log("New Container:", dto.newContainer);
-					// console.log("New Index:", dto.newPosition);
-					// ----- -->

@@ -159,3 +159,90 @@
 		</script>
 	</body>
 </html>
+<!-- // const containers = document.querySelectorAll(".container");
+
+			// containers.forEach((container) => {
+			// 	container.addEventListener("dragstart", (e) => {
+			// 		const dragging = e.target;
+			// 		dragging.classList.add("dragging");
+
+			// 		// Store original container and position in DataTransfer
+			// 		const parentItems = [...dragging.parentElement.querySelectorAll(".item")];
+			// 		const dragInfo = {
+			// 			id: dragging.dataset.id,
+			// 			originalContainer: dragging.parentElement.id,
+			// 			originalPosition: parentItems.indexOf(dragging) + 1,
+			// 		};
+			// 		e.dataTransfer.setData("application/json", JSON.stringify(dragInfo));
+			// 	});
+
+			// 	container.addEventListener("dragover", (e) => {
+			// 		e.preventDefault();
+			// 		const dragging = document.querySelector(".dragging");
+			// 		const afterElement = getDragAfterElement(container, e.clientY);
+			// 		if (afterElement == null) {
+			// 			container.appendChild(dragging);
+			// 		} else {
+			// 			container.insertBefore(dragging, afterElement);
+			// 		}
+			// 	});
+
+			// 	container.addEventListener("drop", (e) => {
+			// 		e.preventDefault();
+			// 		const dragging = document.querySelector(".dragging");
+			// 		if (!dragging) return;
+			// 		dragging.classList.remove("dragging");
+
+			// 		// Retrieve original info from DataTransfer
+			// 		const dragInfo = JSON.parse(e.dataTransfer.getData("application/json"));
+
+			// 		// Compute new position
+			// 		const newItems = [...dragging.parentElement.querySelectorAll(".item")];
+			// 		const newPosition = newItems.indexOf(dragging) + 1;
+
+			// 		// Log DTO: original + new info
+			// 		console.log({
+			// 			id: dragInfo.id,
+			// 			originalContainer: dragInfo.originalContainer,
+			// 			originalPosition: dragInfo.originalPosition,
+			// 			newContainer: dragging.parentElement.id,
+			// 			newPosition: newPosition,
+			// 		});
+
+			// 		// Update numbering and counters
+			// 		updateAll();
+			// 	});
+			// });
+
+			// // Helper to find element after cursor
+			// function getDragAfterElement(container, y) {
+			// 	const draggableElements = [...container.querySelectorAll(".item:not(.dragging)")];
+			// 	return draggableElements.reduce(
+			// 		(closest, child) => {
+			// 			const box = child.getBoundingClientRect();
+			// 			const offset = y - box.top - box.height / 2;
+			// 			if (offset < 0 && offset > closest.offset) {
+			// 				return { offset: offset, element: child };
+			// 			} else {
+			// 				return closest;
+			// 			}
+			// 		},
+			// 		{ offset: Number.NEGATIVE_INFINITY }
+			// 	).element;
+			// }
+
+			// // Update numbering and counters
+			// function updateAll() {
+			// 	containers.forEach((container) => {
+			// 		const items = container.querySelectorAll(".item");
+			// 		items.forEach((item, index) => {
+			// 			item.dataset.position = index + 1;
+			// 			item.textContent = `Item ${index + 1} (id=${item.dataset.id})`;
+			// 		});
+			// 		const counter = document.getElementById(container.id.replace("container", "counter"));
+			// 		counter.textContent = `Total items: ${items.length}`;
+			// 	});
+			// }
+
+			// // Initialize on load
+			// updateAll(); -->

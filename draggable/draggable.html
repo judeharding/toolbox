@@ -134,12 +134,14 @@
 				if (event.target.classList.contains("item")) {
 					targetId = event.target.id;
 					newContainerId = event.target.getAttribute("data-container-id");
-					console.log("DRAGDROPEVENT", draggedElementId, topBottomHalf, targetId, oldContainerId, newContainerId);
+					// console.log("DRAGDROPEVENT", draggedElementId, topBottomHalf, targetId, oldContainerId, newContainerId);
+					console.log("DRAGDROP EVENT");
+					console.log("Element Id is...", draggedElementId);
+					console.log("Top or bottom half = ", topBottomHalf);
+					console.log("Target Id is...", targetId);
+					console.log("OLD container Id is...", oldContainerId);
+					console.log("NEW container Id is...", newContainerId);
 				}
-
-				// targetId = event.target.id;
-				// newContainerId = event.target.getAttribute("data-container-id");
-				// console.log("DRAGDROPEVENT", draggedElementId, topBottomHalf, targetId, oldContainerId, newContainerId);
 
 				event.target.classList.remove("draggingover");
 			});

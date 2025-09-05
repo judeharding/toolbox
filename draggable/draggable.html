@@ -34,6 +34,14 @@
 			.draggingover {
 				background: pink;
 			}
+
+			.dragTargetOver {
+				border-top: 2px solid red;
+			}
+
+			.dragTargetUnder {
+				border-bottom: 2px solid red;
+			}
 		</style>
 	</head>
 	<body>
@@ -54,7 +62,10 @@
 			</div>
 
 			<div>
-				<div class="container" id="container3"></div>
+				<div class="container" id="container3">
+					<div id="bree" class="item" draggable="true" data-container-id="container3">bree</div>
+					<div id="gene" class="item" draggable="true" data-container-id="container3">gene</div>
+				</div>
 			</div>
 		</div>
 
@@ -77,6 +88,7 @@
 
 			// DRAGGING ENTERING A VALID DROP TARGET
 			document.addEventListener("dragenter", function (event) {
+				// console.log("DRAG ENTER...", event.target.id);
 				if (event.target.classList.contains("item")) {
 					event.target.classList.add("draggingover");
 				}
@@ -85,15 +97,25 @@
 			// DRAGGING OVER A VALID DROP TARGET
 			document.addEventListener("dragover", function (event) {
 				event.preventDefault();
-				console.log("DRAGGING OVER...", event.target.id);
+				if (event.target.classList.contains("item")) {
+					console.log("DRAGGING OVER...", event.target.id);
+				}
 
 				const rect = event.target.getBoundingClientRect();
 				const offset = event.clientY - rect.top;
 
 				if (offset < rect.height / 2) {
-					topBottomHalf = "top";
+					if (event.target.classList.contains("item")) {
+						event.target.classList.add("dragTargetOver");
+						event.target.classList.remove("dragTargetUnder");
+						topBottomHalf = "top";
+					}
 				} else {
-					topBottomHalf = "bottom";
+					if (event.target.classList.contains("item")) {
+						event.target.classList.add("dragTargetUnder");
+						event.target.classList.remove("dragTargetOver");
+						topBottomHalf = "bottom";
+					}
 				}
 			});
 
@@ -101,16 +123,23 @@
 			document.addEventListener("dragleave", function (event) {
 				if (event.target.classList.contains("item")) {
 					event.target.classList.remove("draggingover");
+					event.target.classList.remove("dragTargetOver");
+					event.target.classList.remove("dragTargetUnder");
 				}
 			});
 
 			//DRAG DROP - Where You Dropped The Element
 			document.addEventListener("drop", function (event) {
 				event.preventDefault();
+				if (event.target.classList.contains("item")) {
+					targetId = event.target.id;
+					newContainerId = event.target.getAttribute("data-container-id");
+					console.log("DRAGDROPEVENT", draggedElementId, topBottomHalf, targetId, oldContainerId, newContainerId);
+				}
 
-				targetId = event.target.id;
-				newContainerId = event.target.getAttribute("data-container-id");
-				console.log("xxxxxxxxxxxxx", draggedElementId, topBottomHalf, targetId, oldContainerId, newContainerId);
+				// targetId = event.target.id;
+				// newContainerId = event.target.getAttribute("data-container-id");
+				// console.log("DRAGDROPEVENT", draggedElementId, topBottomHalf, targetId, oldContainerId, newContainerId);
 
 				event.target.classList.remove("draggingover");
 			});
@@ -119,8 +148,16 @@
 			document.addEventListener("dragend", function (event) {
 				console.log("ENDING THE DRAG...", draggedElement);
 				draggedElement.classList.remove("dragging");
-				console.log("");
+				// console.log("");
 				draggedElement = null;
+				// Select all elements with class "item"
+				const items = document.querySelectorAll(".item");
+
+				// Loop through each and remove the "xxx" class
+				for (let i = 0; i < items.length; i++) {
+					items[i].classList.remove("dragTargetOver");
+					items[i].classList.remove("dragTargetUnder");
+				}
 			});
 		</script>
 	</body>
